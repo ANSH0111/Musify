@@ -37,14 +37,14 @@ async function getsongs(folder) {
     for (const song of songs) {
         songol.innerHTML = songol.innerHTML + `
         <li>
-            <img class="invert" src="music.svg" alt="">
+            <img class="invert" src="images/music.svg" alt="">
             <div class="info">
                 <div>${song.replaceAll("%20", " ").split('128 Kbps')} </div>
                 <div>Song Artist</div>
             </div>
             <div class="playnow">
                 <span>Play Now</span>
-                <img class="invert" src="play.svg" alt="play">
+                <img class="invert" src="images/play.svg" alt="play">
             </div>
         </li>`;
     }
@@ -64,7 +64,7 @@ const playMusic = (track, pause = false) => {
     currentsong.src = `/Musify/${currfolder}/` + track
     if (!pause) {
         currentsong.play()
-        play.src = "pause.svg"
+        play.src = "images/pause.svg"
     }
     document.querySelector(".songinfo").innerHTML = decodeURI(track)
     document.querySelector(".songtime").innerHTML = "0:00 / 0:00"
@@ -106,7 +106,6 @@ async function displayAlbums(){
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", item => {
             songs = getsongs(`songs/${item.currentTarget.dataset.folder}`);
-            console.log("Clicked")
         })
     })
 
@@ -126,11 +125,10 @@ async function main() {
         if(e.code === 'Space' && !currentsong.paused){
             e.preventDefault()
             currentsong.pause()
-            play.src = "play.svg"
+            play.src = "images/play.svg"
         }
         else if(e.code ==='ArrowRight'){
             let index = songs.indexOf(currentsong.src.split(`/${currfolder}/`).slice(-1)[0])
-            console.log(index)
             if ((index + 1) < songs.length) {
                 playMusic(songs[index + 1])
             }
@@ -144,7 +142,7 @@ async function main() {
         else{
             e.preventDefault()
             currentsong.play()
-            play.src = "pause.svg"
+            play.src = "images/pause.svg"
         }
     })
 
@@ -152,11 +150,11 @@ async function main() {
     play.addEventListener("click", () => {
         if (currentsong.paused) {
             currentsong.play()
-            play.src = "pause.svg"
+            play.src = "images/pause.svg"
         }
         else {
             currentsong.pause()
-            play.src = "play.svg"
+            play.src = "images/play.svg"
         }
     })
 
