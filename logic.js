@@ -18,7 +18,7 @@ function formatTime(seconds) {
 
 async function getsongs(folder) {
     currfolder = folder
-    let a = await (fetch(`/${folder}/`))
+    let a = await (fetch(`/Musify/${folder}/`))
     let response = await a.text()
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -61,7 +61,7 @@ async function getsongs(folder) {
 
 const playMusic = (track, pause = false) => {
     // let audio = new Audio("/Spotify%20Clone/songs/" + track);
-    currentsong.src = `/${currfolder}/` + track
+    currentsong.src = `/Musify/${currfolder}/` + track
     if (!pause) {
         currentsong.play()
         play.src = "pause.svg"
@@ -71,7 +71,7 @@ const playMusic = (track, pause = false) => {
 }
 
 async function displayAlbums(){
-    let a = await (fetch(`/songs`))
+    let a = await (fetch(`/Musify/songs`))
     let response = await a.text()
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -83,9 +83,8 @@ async function displayAlbums(){
         const e = array[i];
         if(e.href.includes("/songs/")){
             let folder = (e.href.split("/songs/").slice(-1)[0])
-            console.log(folder);
             //Get metadata of the folder
-            let a = await (fetch(`/songs/${folder}/info.json`))
+            let a = await (fetch(`/Musify/songs/${folder}/info.json`))
             let response = await a.json()
             cardcontainer.innerHTML = cardcontainer.innerHTML+ `
             <div data-folder="${folder}" class="card">
@@ -95,8 +94,8 @@ async function displayAlbums(){
                 <path d="M10 16.5V7.5L16 12l-6 4.5z" fill="black" />
               </svg>
             </div>
-            
-            <img src="/songs/${folder}/cover.jpg" alt="cover image">
+
+            <img src="/Musify/songs/${folder}/cover.jpg" alt="cover image">
             <h2>${response.title}</h2>
             <p>${response.description}</p>
           </div>`
@@ -131,6 +130,7 @@ async function main() {
         }
         else if(e.code ==='ArrowRight'){
             let index = songs.indexOf(currentsong.src.split(`/${currfolder}/`).slice(-1)[0])
+            console.log(index)
             if ((index + 1) < songs.length) {
                 playMusic(songs[index + 1])
             }
