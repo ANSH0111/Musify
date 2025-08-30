@@ -18,7 +18,7 @@ function formatTime(seconds) {
 
 async function getsongs(folder) {
     currfolder = folder
-    let a = await (fetch(`/Musify/${folder}/`))
+    let a = await (fetch(`/${folder}/`))
     let response = await a.text()
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -61,7 +61,7 @@ async function getsongs(folder) {
 
 const playMusic = (track, pause = false) => {
     // let audio = new Audio("/Spotify%20Clone/songs/" + track);
-    currentsong.src = `/Musify/${currfolder}/` + track
+    currentsong.src = `/${currfolder}/` + track
     if (!pause) {
         currentsong.play()
         play.src = "images/pause.svg"
@@ -71,7 +71,7 @@ const playMusic = (track, pause = false) => {
 }
 
 async function displayAlbums(){
-    let a = await (fetch(`/Musify/songs`))
+    let a = await (fetch(`/songs`))
     let response = await a.text()
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -84,7 +84,7 @@ async function displayAlbums(){
         if(e.href.includes("/songs/")){
             let folder = (e.href.split("/songs/").slice(-1)[0])
             //Get metadata of the folder
-            let a = await (fetch(`/Musify/songs/${folder}/info.json`))
+            let a = await (fetch(`/songs/${folder}/info.json`))
             let response = await a.json()
             cardcontainer.innerHTML = cardcontainer.innerHTML+ `
             <div data-folder="${folder}" class="card">
@@ -95,7 +95,7 @@ async function displayAlbums(){
               </svg>
             </div>
 
-            <img src="/Musify/songs/${folder}/cover.jpg" alt="cover image">
+            <img src="/songs/${folder}/cover.jpg" alt="cover image">
             <h2>${response.title}</h2>
             <p>${response.description}</p>
           </div>`
